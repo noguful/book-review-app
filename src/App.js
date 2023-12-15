@@ -19,8 +19,10 @@ function App() {
     <div className="App">
       <div className="greeting">
         <div className="greeting-form">
-          <input type="text" className="greeting-input" placeholder="名前を入力してください" ref={inputRef} />
-          <button type="button" className="greeting-button" onClick={handleClick}>Greeting</button>
+          <form>
+            <input type="text" className="greeting-input" placeholder="名前を入力してください" ref={inputRef} />
+            <button type="button" className="greeting-button" onClick={handleClick}>Greeting</button>
+          </form>
         </div>
         <div className="greeting-contents">
           {name && <p className="greeting-body">こんにちは！{name}さん！</p>}
