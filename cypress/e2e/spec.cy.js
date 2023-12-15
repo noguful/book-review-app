@@ -1,18 +1,17 @@
 /* eslint-disable no-undef */
-describe('My First Test', () => {
-  it('Gets, types and asserts', () => {
-    cy.visit('https://example.cypress.io')
+describe('Greeting テスト', () => {
+  it('Greetingページに移動し動作することを確認', () => {
+    cy.visit('http://localhost:3000/')
+    cy.url().should('include', 'localhost')
+    cy.get('.greeting-input').type('太郎')
+    cy.get('.greeting-button').click()
+    cy.get('.greeting-body').should('include.text', 'こんにちは！太郎さん！')
+  })
 
-    cy.contains('type').click()
-
-    // Should be on a new URL which
-    // includes '/commands/actions'
-    cy.url().should('include', '/commands/actions')
-
-    // Get an input, type into it
-    cy.get('.action-email').type('fake@email.com')
-
-    //  Verify that the value has been updated
-    cy.get('.action-email').should('have.value', 'fake@email.com')
+  it('Greetingページにて名前を入力しないでボタンを押下した時に、エラーメッセージが表示されることを確認', () => {
+    cy.visit('http://localhost:3000/')
+    cy.url().should('include', 'localhost')
+    cy.get('.greeting-button').click()
+    cy.get('.greeting-error').should('include.text', '名前が空です！')
   })
 })
