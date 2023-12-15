@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('Greeting ページに必要な要素が存在するか確認する', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const textBoxElement = screen.getByRole('textbox');
+  const buttonElement = screen.getByRole('button');
+  expect(textBoxElement).toBeInTheDocument();
+  expect(buttonElement).toBeInTheDocument();
 });
