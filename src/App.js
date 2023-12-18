@@ -27,7 +27,6 @@ function App() {
         <div className="greeting-contents">
           {name && <p className="greeting-body">こんにちは！{name}さん！</p>}
           {error && <p className="greeting-error">名前が空です！</p>}
-          {console.log(typeof inputValue)}
         </div>
       </div>
     </div>
