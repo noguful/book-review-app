@@ -5,6 +5,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import axios from 'axios';
 import { url } from '../const';
 import Compressor from 'compressorjs';
+import { Header } from '../components/Header'
 
 export const SignUp = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
@@ -49,6 +50,7 @@ export const SignUp = () => {
 
   return (
     <div>
+      <Header />
       <p>ユーザー作成画面</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <p className="errorMessage">{errorMessage}</p>
