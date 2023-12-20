@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
 import axios from 'axios';
 import { url } from '../const';
+import Compressor from 'compressorjs';
 
 export const SignUp = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
@@ -20,21 +21,29 @@ export const SignUp = () => {
       const authToken = userResponse.data.token;
       
       if (data.icon && data.icon.length > 0) {
-        const formData = new FormData();
-        formData.append('icon', data.icon[0]);
 
-        await axios.post(`${url}/uploads`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${authToken}`
+        new Compressor(data.icon[0], {
+          quality: 0.6,
+          success(result) {
+            const formData = new FormData();
+            formData.append('icon', result);
+
+            axios.post(`${url}/uploads`, formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${authToken}`
+              }
+            });
+          },
+          error(error) {
+            setErrorMessage('画像圧縮に失敗しました。');
           }
         });
       }
       console.log('Success:', data)
       reset();
     } catch (error) {
-      setErrorMessage('作成に失敗しました。');
-      console.log('Error:', data);
+      setErrorMessage('ユーザー作成に失敗しました。');
     }
   }
 
