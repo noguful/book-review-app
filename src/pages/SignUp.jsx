@@ -11,7 +11,7 @@ import { Header } from '../components/Header'
 export const SignUp = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
   const [ errorMessage, setErrorMessage ] = useState('');
-  const [ cookie, setCookie] = useCookies(['token']);
+  const [, setCookie] = useCookies(['token']);
 
   const onSubmit = async (data) => {
     try {
