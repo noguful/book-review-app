@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 import { Header } from '../components/Header';
 import axios from 'axios';
 import { url } from '../const';
+import './home.scss'
 
 export const Home = () => {
   const [cookies] = useCookies();
@@ -33,10 +34,13 @@ export const Home = () => {
           <h2>書籍レビュー一覧</h2>
         </hgroup>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
-        <ul>
+        <ul className="book-list">
           {lists.map((list, key) => {
             return (
-              <li key={key}>{list.title}</li>
+              <li key={key} className="book-list__item book-item">
+                <p className="book-item__title">{list.title}</p>
+                <p className="book-item__body">{list.detail}</p>
+              </li>
             );
           })}
         </ul>
