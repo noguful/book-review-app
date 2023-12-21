@@ -49,43 +49,56 @@ export const SignUp = () => {
   }
 
   return (
-    <div>
+    <>
       <Header />
-      <p>ユーザー作成画面</p>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <main className="main">
+        <hgroup className="hgroup">
+          <h2>ユーザー作成画面</h2>
+          <Link to="/login">ログイン画面へ</Link>
+        </hgroup>
         <p className="errorMessage">{errorMessage}</p>
-        <div>
-          <label htmlFor="username">名前</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            {...register("name", {
-              required: '名前を入力してください。',
-              maxLength: {
-                value: 4,
-                message: '4文字以内で入力してください。'
-              },
-            })}
-          />
-          <ErrorMessage errors={errors} name="name" render={({message}) => <p>{message}</p>} />
-        </div>
-        <div>
-          <label htmlFor="email">メールアドレス: </label>
-          <input type="email" id="email" {...register("email", { required: "Email Address is required" })}  aria-invalid={errors.email ? "true" : "false"} />
-          <ErrorMessage errors={errors} name="email" render={({message}) => <p>{message}</p>} />
-        </div>
-        <div>
-          <label htmlFor="pass">パスワード: </label>
-          <input type="password" name="password" id="pass" {...register("password")}  />
-        </div>
-        <div>
-          <label htmlFor="icon">アップロードするファイルを選択してください: </label>
-          <input type="file" id="icon" name="icon" accept=".jpg, .jpeg, .png" {...register("icon")} />
-        </div>
-        <input type="submit" value="作成する" />
-      </form>
-      <Link to="/login">ログイン</Link>
-    </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <fieldset className="fieldset">
+            <legend className="fieldset__legend">基本情報</legend>
+            <div className="field">
+              <label htmlFor="username" className="field__label">名前</label>
+              <input
+                type="text"
+                id="username"
+                className="field__input"
+                name="username"
+                {...register("name", {
+                  required: '名前は必須です。',
+                  maxLength: {
+                    value: 4,
+                    message: '4文字以内で入力してください。'
+                  },
+                })}
+              />
+              <ErrorMessage errors={errors} name="name" render={({message}) => <p className="field__error">{message}</p>} />
+            </div>
+            <div className="field">
+              <label htmlFor="email" className="field__label">メールアドレス</label>
+              <input type="email" id="email" className="field__input" {...register("email", { required: "メールアドレスは必須です。" })}  aria-invalid={errors.email ? "true" : "false"} />
+              <ErrorMessage errors={errors} name="email" render={({message}) => <p className="field__error">{message}</p>} />
+            </div>
+            <div className="field">
+              <label htmlFor="pass" className="field__label">パスワード</label>
+              <input type="password" name="password" id="pass" className="field__input" {...register("password")}  />
+            </div>
+          </fieldset>
+          <fieldset className="fieldset">
+            <legend className="fieldset__legend">アイコン画像</legend>
+            <div className="field">
+              <label htmlFor="icon" className="field__label">アップロードするファイルを選択してください。</label>
+              <input type="file" id="icon" className="field__file" name="icon" accept=".jpg, .jpeg, .png" {...register("icon")} />
+            </div>
+          </fieldset>
+          <div className="form-button">
+            <input type="submit" value="ユーザーを作成する" className="button" />
+          </div>
+        </form>
+      </main>
+    </>
   );
 };
