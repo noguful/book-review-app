@@ -9,6 +9,10 @@
   align-items: center;
 }
 
+.form {
+  margin-top: 24px;
+}
+
 .fieldset {
   padding: 16px;
   border: 1px solid #aaa;
@@ -70,4 +74,9 @@
 .form-button {
   margin-top: 16px;
   text-align: right;
+}
+
+.error-message {
+  color: #ff6600;
+  font-weight: bold;
 }

@@ -56,8 +56,8 @@ export const SignUp = () => {
           <h2>ユーザー作成画面</h2>
           <Link to="/login">ログイン画面へ</Link>
         </hgroup>
-        <p className="errorMessage">{errorMessage}</p>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <fieldset className="fieldset">
             <legend className="fieldset__legend">基本情報</legend>
             <div className="field">

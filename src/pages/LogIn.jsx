@@ -30,8 +30,8 @@ export const LogIn = () => {
           <h2>ログイン画面</h2>
           <Link to="/signup">ユーザー作成画面へ</Link>
         </hgroup>
-        <p className="errorMessage">{errorMessage}</p>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <fieldset className="fieldset">
             <legend className="fieldset__legend">ログイン情報の入力</legend>
             <div className="field">
