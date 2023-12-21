@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
+import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { url } from '../const';
 import Compressor from 'compressorjs';
@@ -10,6 +11,7 @@ import { Header } from '../components/Header'
 export const SignUp = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
   const [ errorMessage, setErrorMessage ] = useState('');
+  const [ cookie, setCookie] = useCookies(['token']);
 
   const onSubmit = async (data) => {
     try {
@@ -20,7 +22,7 @@ export const SignUp = () => {
       });
 
       const authToken = userResponse.data.token;
-      
+
       if (data.icon && data.icon.length > 0) {
 
         new Compressor(data.icon[0], {
@@ -42,6 +44,7 @@ export const SignUp = () => {
         });
       }
       console.log('Success:', data)
+      setCookie('token', authToken);
       reset();
     } catch (error) {
       setErrorMessage('ユーザー作成に失敗しました。');
