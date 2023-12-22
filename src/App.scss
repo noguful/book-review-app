@@ -64,10 +64,17 @@
   border-radius: 4px;
   color: #fff;
   font-weight: bold;
+  user-select: none;
 
   &:hover {
     opacity: 0.6;
     cursor: pointer;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    border: 1px solid #ddd;
+    background-color: #ddd;
   }
 }
 
@@ -77,6 +84,22 @@
 }
 
 .error-message {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.api-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   color: #ff6600;
   font-weight: bold;
 }

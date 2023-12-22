@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Header } from '../components/Header';
 import axios from 'axios';
+import useSWR from 'swr';
 import { url } from '../const';
-import './home.scss'
+import { Pagination } from '../components/Pagination';
+import './home.scss';
 
 export const Home = () => {
   const [cookies] = useCookies();
-  const [lists, setLists] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect (() => {
+  const [offset, setOffset] = useState(0);
+  const fetcher = (url) =>
     axios
-      .get(`${url}/books?offset=0`, {
+      .get(url, {
         headers: {
           authorization: `Bearer ${cookies.token}`,
-        }
+        },
       })
-      .then((res) => {
-        setLists(res.data);
-      })
-      .catch((err) => {
-        setErrorMessage('リストの取得に失敗しました。');
-      });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      .then((res) => res.data);
+
+  const { data, error, isLoading } = useSWR(`${url}/books?offset=${offset}`, fetcher)
+
+  if (isLoading) return <div className="loading">loading...</div>
 
   return (
     <>
@@ -33,9 +30,9 @@ export const Home = () => {
         <hgroup className="hgroup">
           <h2>書籍レビュー一覧</h2>
         </hgroup>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {error && <p className="error-message">リストの取得に失敗しました。</p>}
         <ul className="book-list">
-          {lists.map((list, key) => {
+          {data?.map((list, key) => {
             return (
               <li key={key} className="book-list__item book-item">
                 <p className="book-item__title">{list.title}</p>
@@ -44,6 +41,7 @@ export const Home = () => {
             );
           })}
         </ul>
+        {data && <Pagination offset={offset} setOffset={setOffset} />}
       </main>
     </>
   );
