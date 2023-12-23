@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 import { Header } from '../components/Header';
 import axios from 'axios';
 import useSWR from 'swr';
@@ -8,6 +9,7 @@ import { Pagination } from '../components/Pagination';
 import './home.scss';
 
 export const Home = () => {
+  const auth = useSelector((state) => state.auth.isSignIn);
   const [cookies] = useCookies();
   const [offset, setOffset] = useState(0);
   const fetcher = (url) =>
@@ -19,7 +21,7 @@ export const Home = () => {
       })
       .then((res) => res.data);
 
-  const { data, error, isLoading } = useSWR(`${url}/books?offset=${offset}`, fetcher)
+  const { data, error, isLoading } = useSWR( auth ? `${url}/books?offset=${offset}` : `${url}/public/books?offset=${offset}`, fetcher)
 
   if (isLoading) return <div className="loading">loading...</div>
 
