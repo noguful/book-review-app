@@ -3,12 +3,18 @@ import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
 import { useCookies } from 'react-cookie';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { signIn } from '../authSlice';
 import axios from 'axios';
 import { url } from '../const';
 import Compressor from 'compressorjs';
 import { Header } from '../components/Header'
 
 export const SignUp = () => {
+  const history = useNavigate();
+  const auth = useSelector((state) => state.auth.isSignIn);
+  const dispatch = useDispatch();
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
   const [ errorMessage, setErrorMessage ] = useState('');
   const [, setCookie] = useCookies(['token']);
@@ -44,12 +50,16 @@ export const SignUp = () => {
         });
       }
       console.log('Success:', data)
+      dispatch(signIn());
       setCookie('token', authToken);
       reset();
+      history('/');
     } catch (error) {
       setErrorMessage('ユーザー作成に失敗しました。');
     }
-  }
+  };
+
+  if (auth) return <Navigate to="/" />;
 
   return (
     <>
