@@ -1,26 +1,38 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn } from '../authSlice';
 import { ErrorMessage } from '@hookform/error-message';
 import axios from 'axios';
 import { url } from '../const';
 import { Header } from '../components/Header'
 
 export const LogIn = () => {
+  const auth = useSelector((state) => state.auth.isSignIn);
+  const dispatch = useDispatch();
+  const history = useNavigate();
+  const [, setCookie] = useCookies();
   const { register, formState: { errors }, handleSubmit } = useForm();
   const [ errorMessage, setErrorMessage ] = useState('');
 
   const onSubmit = async (data) => {
     try {
-      await axios.post(`${url}/signin`, {
+      const loginResponse = await axios.post(`${url}/signin`, {
         email: data.email,
         password: data.password
       });
-      console.log('Success:', data)
+      console.log('Success:', loginResponse)
+      setCookie('token', loginResponse.data.token);
+      dispatch(signIn());
+      history('/');
     } catch (error) {
       setErrorMessage('ログインに失敗しました。');
     }
-  }
+  };
+
+  if (auth) return <Navigate to="/" />;
 
   return (
     <>
