@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { CookiesProvider } from 'react-cookie';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -8,9 +10,11 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <CookiesProvider defaultSetOptions={{ path: '/' }}>
-      <App />
-    </CookiesProvider>
+    <Provider store={store}>
+      <CookiesProvider defaultSetOptions={{ path: '/' }}>
+        <App />
+      </CookiesProvider>
+    </Provider>
   </React.StrictMode>
 );
 
