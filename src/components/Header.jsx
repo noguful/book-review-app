@@ -36,7 +36,7 @@ export const Header = () => {
       <div className="header__control">
         {auth ? (
           <>
-            <p className="header__user">{data?.name}さん</p>
+            <p className="header__user">{data?.name}さん<Link to="/profile" className="header__edit">（編集）</Link></p>
             <button onClick={handleSignOut} className="button button--white">
               ログアウト
             </button>
