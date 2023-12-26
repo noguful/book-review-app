@@ -15,6 +15,15 @@
 
 .book-item {
 
+  &__link {
+    color: #000;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
   &__title {
     margin: 0;
     padding-bottom: 8px;

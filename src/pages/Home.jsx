@@ -26,6 +26,10 @@ export const Home = () => {
 
   if (isLoading) return <div className="loading">loading...</div>
 
+  const handleClick = (e) => {
+    console.log('書籍レビュー詳細URL:', e.currentTarget.href);
+  }
+
   return (
     <>
       <Header />
@@ -39,8 +43,10 @@ export const Home = () => {
           {data?.map((list, key) => {
             return (
               <li key={key} className="book-list__item book-item">
-                <p className="book-item__title">{list.title}</p>
-                <p className="book-item__body">{list.detail}</p>
+                <Link to={`/detail/${list.id}`} className="book-item__link" onClick={handleClick}>
+                  <p className="book-item__title">{list.title}</p>
+                  <p className="book-item__body">{list.detail}</p>
+                </Link>
               </li>
             );
           })}
