@@ -11,6 +11,11 @@
   &__title {
     font-size: 24px;
     color: white;
+
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
   }
 
   &__control {
