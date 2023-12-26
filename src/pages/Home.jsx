@@ -6,6 +6,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import { url } from '../const';
 import { Pagination } from '../components/Pagination';
+import { Link } from 'react-router-dom';
 import './home.scss';
 
 export const Home = () => {
@@ -31,6 +32,7 @@ export const Home = () => {
       <main className="main">
         <hgroup className="hgroup">
           <h2>書籍レビュー一覧</h2>
+          <Link to="/new" className="button">レビュー登録</Link>
         </hgroup>
         {error && <p className="error-message">リストの取得に失敗しました。</p>}
         <ul className="book-list">
