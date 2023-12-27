@@ -36,7 +36,7 @@ export const Home = () => {
       <main className="main">
         <hgroup className="hgroup">
           <h2>書籍レビュー一覧</h2>
-          <Link to="/new" className="button">レビュー登録</Link>
+          {auth && <Link to="/new" className="button">レビュー登録</Link>}
         </hgroup>
         {error && <p className="error-message">リストの取得に失敗しました。</p>}
         <ul className="book-list">
