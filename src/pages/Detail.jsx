@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header } from '../components/Header';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
 import { useCookies } from 'react-cookie';
@@ -28,6 +28,7 @@ export const Detail = () => {
       <main className="main">
         <hgroup className="hgroup">
           <h2>書籍レビュー詳細</h2>
+          {data.isMine && <Link to={`/edit/${detailId}`} className="button">編集</Link>}
         </hgroup>
         {error && <p className="error-message">リストの取得に失敗しました。</p>}
         <ul className="book-list">
