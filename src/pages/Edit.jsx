@@ -53,12 +53,28 @@ export const Edit = () => {
     }
   };
 
+  const handleClick = async () => {
+    try {
+      await axios.delete(`${url}/books/${detailId}`,
+        {
+          headers: {
+            authorization: `Bearer ${cookies.token}`
+          }
+        }
+      );
+      history('/');
+    } catch (error) {
+      setErrorMessage('書籍レビューの削除に失敗しました。');
+    }
+  };
+
   return (
     <>
       <Header />
       <main className="main">
         <hgroup className="hgroup">
           <h2>書籍レビュー編集</h2>
+          <button type="button" onClick={handleClick} className="button">削除</button>
         </hgroup>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
