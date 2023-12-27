@@ -43,10 +43,17 @@ export const Home = () => {
           {data?.map((list, key) => {
             return (
               <li key={key} className="book-list__item book-item">
-                <Link to={`/detail/${list.id}`} className="book-item__link" onClick={handleClick}>
-                  <p className="book-item__title">{list.title}</p>
-                  <p className="book-item__body">{list.detail}</p>
-                </Link>
+                {auth ? (
+                  <Link to={`/detail/${list.id}`} className="book-item__link" onClick={handleClick}>
+                    <p className="book-item__title">{list.title}</p>
+                    <p className="book-item__body">{list.detail}</p>
+                  </Link>
+                ) : (
+                  <>
+                    <p className="book-item__title">{list.title}</p>
+                    <p className="book-item__body">{list.detail}</p>
+                  </>
+                )}
               </li>
             );
           })}
