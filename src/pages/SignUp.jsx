@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
@@ -18,6 +18,25 @@ export const SignUp = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
   const [ errorMessage, setErrorMessage ] = useState('');
   const [, setCookie] = useCookies(['token']);
+  const [imageData, setImageData] = useState("");
+  const fileInput = useRef(null);
+  const deployment = (files) => {
+    const file = files[0];
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setImageData(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  }
+  const onChange = (e) => {
+    const files = e.target.files;
+    if (!files || files.length <= 0) return;
+    deployment(files);
+  }
+  const { ref, ...rest } = register("file", {
+    onChange,
+    required: "アイコン画像は必須です。",
+  });
 
   const onSubmit = async (data) => {
     try {
@@ -30,7 +49,6 @@ export const SignUp = () => {
       const authToken = userResponse.data.token;
 
       if (data.icon && data.icon.length > 0) {
-
         new Compressor(data.icon[0], {
           quality: 0.6,
           success(result) {
@@ -83,8 +101,8 @@ export const SignUp = () => {
                 {...register("name", {
                   required: '名前は必須です。',
                   maxLength: {
-                    value: 4,
-                    message: '4文字以内で入力してください。'
+                    value: 10,
+                    message: '10文字以内で入力してください。'
                   },
                 })}
               />
@@ -92,19 +110,53 @@ export const SignUp = () => {
             </div>
             <div className="field">
               <label htmlFor="email" className="field__label">メールアドレス</label>
-              <input type="email" id="email" className="field__input" {...register("email", { required: "メールアドレスは必須です。" })}  aria-invalid={errors.email ? "true" : "false"} />
+              <input
+                type="email"
+                id="email"
+                className="field__input"
+                {...register("email", {
+                  required: "メールアドレスは必須です。"
+                })}
+                aria-invalid={errors.email ? "true" : "false"}
+              />
               <ErrorMessage errors={errors} name="email" render={({message}) => <p className="field__error">{message}</p>} />
             </div>
             <div className="field">
               <label htmlFor="pass" className="field__label">パスワード</label>
-              <input type="password" name="password" id="pass" className="field__input" {...register("password")}  />
+              <input
+                type="password"
+                name="password"
+                id="pass"
+                className="field__input"
+                {...register("password", {
+                  required: "パスワードは必須です。"
+                })}
+              />
+              <ErrorMessage errors={errors} name="password" render={({message}) => <p className="field__error">{message}</p>} />
             </div>
           </fieldset>
           <fieldset className="fieldset">
             <legend className="fieldset__legend">アイコン画像</legend>
             <div className="field">
               <label htmlFor="icon" className="field__label">アップロードするファイルを選択してください。</label>
-              <input type="file" id="icon" className="field__file" name="icon" accept=".jpg, .jpeg, .png" {...register("icon")} />
+              <input
+                type="file"
+                id="icon"
+                className="field__file"
+                name="icon"
+                accept=".jpg, .jpeg, .png"
+                ref={(e) => {
+                  ref(e);
+                  fileInput.current = e;
+                }}
+                {...rest}
+              />
+              {imageData &&
+                <p>
+                  <img src={imageData} alt="画像プレビュー" width="200" />
+                </p>
+              }
+              <ErrorMessage errors={errors} name="file" render={({message}) => <p className="field__error">{message}</p>} />
             </div>
           </fieldset>
           <div className="form-button">
