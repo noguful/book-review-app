@@ -48,12 +48,29 @@ export const LogIn = () => {
             <legend className="fieldset__legend">ログイン情報の入力</legend>
             <div className="field">
               <label htmlFor="email" className="field__label">メールアドレス</label>
-              <input type="email" id="email" className="field__input" {...register("email", { required: "メールアドレスは必須です。" })}  aria-invalid={errors.email ? "true" : "false"} />
+              <input
+                type="email"
+                id="email"
+                className="field__input"
+                {...register("email", {
+                  required: "メールアドレスは必須です。"
+                })}
+                aria-invalid={errors.email ? "true" : "false"}
+              />
               <ErrorMessage errors={errors} name="email" render={({message}) => <p className="field__error">{message}</p>} />
             </div>
             <div className="field">
               <label htmlFor="pass" className="field__label">パスワード</label>
-              <input type="password" name="password" id="pass" className="field__input" {...register("password")}  />
+              <input
+                type="password"
+                name="password"
+                id="pass"
+                className="field__input"
+                {...register("password", {
+                  required: "パスワードは必須です。"
+                })}
+              />
+              <ErrorMessage errors={errors} name="password" render={({message}) => <p className="field__error">{message}</p>} />
             </div>
           </fieldset>
           <div className="form-button">
