@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import { Header } from '../components/Header';
 import axios from 'axios';
 import useSWR from 'swr';
+import { useRecoilState } from "recoil";
+import { paginationState } from "../state";
 import { url } from '../const';
 import { Pagination } from '../components/Pagination';
 import { Link } from 'react-router-dom';
@@ -12,7 +14,7 @@ import './home.scss';
 export const Home = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
   const [cookies] = useCookies();
-  const [offset, setOffset] = useState(0);
+  const [offset] = useRecoilState(paginationState);
   const fetcher = (url) =>
     axios
       .get(url, {
@@ -58,7 +60,7 @@ export const Home = () => {
             );
           })}
         </ul>
-        {data && <Pagination offset={offset} setOffset={setOffset} />}
+        {data && <Pagination />}
       </main>
     </>
   );

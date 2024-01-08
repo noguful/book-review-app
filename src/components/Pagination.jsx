@@ -1,7 +1,11 @@
 import React from 'react';
 import './pagination.scss';
+import { useRecoilState } from "recoil";
+import { paginationState } from "../state";
 
-export const Pagination = ({ offset, setOffset }) => {
+export const Pagination = () => {
+
+  const [offset, setOffset] = useRecoilState(paginationState);
 
   return (
     <div className="pagination">
