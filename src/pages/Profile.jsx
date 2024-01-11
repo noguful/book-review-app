@@ -66,8 +66,8 @@ export const Profile = () => {
                 {...register("name", {
                   required: '名前は必須です。',
                   maxLength: {
-                    value: 4,
-                    message: '4文字以内で入力してください。'
+                    value: 10,
+                    message: '10文字以内で入力してください。'
                   },
                 })}
               />
