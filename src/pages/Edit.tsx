@@ -86,7 +86,6 @@ export const Edit = () => {
                 type="text"
                 id="title"
                 className="field__input"
-                name="title"
                 {...register("title", {
                   required: 'タイトルは必須です。',
                   maxLength: {
@@ -103,7 +102,6 @@ export const Edit = () => {
                 type="url"
                 id="url"
                 className="field__input"
-                name="url"
                 {...register("url", {
                   required: 'URLは必須です。'
                 })}
@@ -113,10 +111,8 @@ export const Edit = () => {
             <div className="field">
               <label htmlFor="title" className="field__label">書籍詳細</label>
               <textarea
-                rows="4"
                 id="detail"
                 className="field__input"
-                name="detail"
                 {...register("detail", {
                   required: '書籍詳細は必須です。'
                 })}
@@ -126,10 +122,8 @@ export const Edit = () => {
             <div className="field">
               <label htmlFor="title" className="field__label">レビュー</label>
               <textarea
-                rows="4"
                 id="review"
                 className="field__input"
-                name="review"
                 {...register("review", {
                   required: 'レビューは必須です。'
                 })}

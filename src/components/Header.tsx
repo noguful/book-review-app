@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import './header.scss'
 
 export const Header = () => {
-  const auth = useSelector((state) => state.auth.isSignIn);
+  const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch();
   const history = useNavigate();
   const [cookies, , removeCookie] = useCookies();

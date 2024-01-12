@@ -10,7 +10,7 @@ import { url } from '../const';
 import { Header } from '../components/Header'
 
 export const LogIn = () => {
-  const auth = useSelector((state) => state.auth.isSignIn);
+  const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch();
   const history = useNavigate();
   const [, setCookie] = useCookies();
@@ -63,7 +63,6 @@ export const LogIn = () => {
               <label htmlFor="pass" className="field__label">パスワード</label>
               <input
                 type="password"
-                name="password"
                 id="pass"
                 className="field__input"
                 {...register("password", {

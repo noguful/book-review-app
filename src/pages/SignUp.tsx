@@ -13,7 +13,7 @@ import { Header } from '../components/Header'
 
 export const SignUp = () => {
   const history = useNavigate();
-  const auth = useSelector((state) => state.auth.isSignIn);
+  const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch();
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
   const [ errorMessage, setErrorMessage ] = useState('');
@@ -24,7 +24,7 @@ export const SignUp = () => {
     const file = files[0];
     const fileReader = new FileReader();
     fileReader.onload = () => {
-      setImageData(fileReader.result);
+      setImageData(fileReader.result as any);
     };
     fileReader.readAsDataURL(file);
   }
@@ -97,7 +97,6 @@ export const SignUp = () => {
                 type="text"
                 id="username"
                 className="field__input"
-                name="username"
                 {...register("name", {
                   required: '名前は必須です。',
                   maxLength: {
@@ -125,7 +124,6 @@ export const SignUp = () => {
               <label htmlFor="pass" className="field__label">パスワード</label>
               <input
                 type="password"
-                name="password"
                 id="pass"
                 className="field__input"
                 {...register("password", {
@@ -143,11 +141,10 @@ export const SignUp = () => {
                 type="file"
                 id="icon"
                 className="field__file"
-                name="icon"
                 accept=".jpg, .jpeg, .png"
                 ref={(e) => {
                   ref(e);
-                  fileInput.current = e;
+                  fileInput.current = e as any;
                 }}
                 {...rest}
               />

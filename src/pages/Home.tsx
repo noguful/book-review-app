@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import './home.scss';
 
 export const Home = () => {
-  const auth = useSelector((state) => state.auth.isSignIn);
+  const auth = useSelector((state: any) => state.auth.isSignIn);
   const [cookies] = useCookies();
   const [offset] = useRecoilState(paginationState);
   const fetcher = (url) =>
