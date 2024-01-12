@@ -33,7 +33,7 @@ export const Header = () => {
   return (
     <header className="header">
       <h1 className="header__title">
-        <Link to="/">書籍レビュー</Link>
+        <Link to="/">書籍レビューアプリ</Link>
       </h1>
       <div className="header__control">
         {auth ? (
