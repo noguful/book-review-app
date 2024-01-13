@@ -9,7 +9,7 @@ import { url } from '../const';
 export const Detail = () => {
   const { detailId } = useParams();
   const [cookies] = useCookies();
-  const fetcher = (url) =>
+  const fetcher = (url: string) =>
     axios
       .get(url, {
         headers: {
