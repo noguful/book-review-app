@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,11 +7,18 @@ import axios from 'axios';
 import { url } from '../const';
 import { Header } from '../components/Header'
 
+type FormValues = {
+  title: string;
+  url: string;
+  detail: string;
+  review: string;
+};
+
 export const Edit = () => {
   const { detailId } = useParams();
   const [cookies] = useCookies();
   const history = useNavigate();
-  const { register, formState: { errors }, handleSubmit, setValue } = useForm();
+  const { register, formState: { errors }, handleSubmit, setValue } = useForm<FormValues>();
   const [ errorMessage, setErrorMessage ] = useState('');
 
   useEffect(() => {
@@ -32,7 +39,7 @@ export const Edit = () => {
       });
   }, [cookies.token, detailId, setValue]);
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       await axios.put(`${url}/books/${detailId}`, {
           title: data.title,
