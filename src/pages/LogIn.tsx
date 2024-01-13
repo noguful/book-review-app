@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useCookies } from 'react-cookie';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,15 +9,20 @@ import axios from 'axios';
 import { url } from '../const';
 import { Header } from '../components/Header'
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 export const LogIn = () => {
   const auth = useSelector((state: any) => state.auth.isSignIn);
   const dispatch = useDispatch();
   const history = useNavigate();
   const [, setCookie] = useCookies();
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, formState: { errors }, handleSubmit } = useForm<FormValues>();
   const [ errorMessage, setErrorMessage ] = useState('');
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       const loginResponse = await axios.post(`${url}/signin`, {
         email: data.email,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +7,14 @@ import axios from 'axios';
 import { url } from '../const';
 import { Header } from '../components/Header'
 
+type FormValues = {
+  name: string;
+};
+
 export const Profile = () => {
   const [cookies] = useCookies();
   const history = useNavigate();
-  const { register, formState: { errors }, handleSubmit, setValue } = useForm();
+  const { register, formState: { errors }, handleSubmit, setValue } = useForm<FormValues>();
   const [ errorMessage, setErrorMessage ] = useState('');
 
   useEffect(() => {
@@ -28,7 +32,7 @@ export const Profile = () => {
       });
   }, [cookies.token, setValue]);
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
       await axios.put(`${url}/users`, {
           name: data.name
@@ -62,7 +66,6 @@ export const Profile = () => {
                 type="text"
                 id="username"
                 className="field__input"
-                name="username"
                 {...register("name", {
                   required: '名前は必須です。',
                   maxLength: {
