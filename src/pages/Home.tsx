@@ -46,10 +46,15 @@ export const Home = () => {
             return (
               <li key={key} className="book-list__item book-item">
                 {auth ? (
-                  <Link to={`/detail/${list.id}`} className="book-item__link" onClick={handleClick}>
-                    <p className="book-item__title">{list.title}</p>
-                    <p className="book-item__body">{list.detail}</p>
-                  </Link>
+                  <>
+                    <Link to={`/detail/${list.id}`} className="book-item__link" onClick={handleClick}>
+                      <p className="book-item__title">
+                        {list.title}
+                      </p>
+                      <p className="book-item__body">{list.detail}</p>
+                    </Link>
+                    {list.isMine && <Link to={`/edit/${list.id}`} className="book-item__edit">編集</Link>}
+                  </>
                 ) : (
                   <>
                     <p className="book-item__title">{list.title}</p>
