@@ -28,9 +28,21 @@ export const Home = () => {
 
   if (isLoading) return <div className="loading">loading...</div>
 
-  const handleClick = (e) => {
-    console.log('書籍レビュー詳細URL:', e.currentTarget.href);
-  }
+  const handleClick = async (bookId: string) => {
+    try {
+      await axios.post(`${url}/logs`, {
+          selectBookId: bookId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${cookies.token}`
+          }
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -47,7 +59,7 @@ export const Home = () => {
               <li key={key} className="book-list__item book-item">
                 {auth ? (
                   <>
-                    <Link to={`/detail/${list.id}`} className="book-item__link" onClick={handleClick}>
+                    <Link to={`/detail/${list.id}`} className="book-item__link" onClick={() => handleClick(list.id)}>
                       <p className="book-item__title">
                         {list.title}
                       </p>
